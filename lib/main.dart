@@ -1,7 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_tutorial/src/screen/main_screen/main_screen.dart';
+import 'dart:io';
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:flutter_displaymode/flutter_displaymode.dart';
+
+import 'src/screen/main_screen/main_screen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if (Platform.isAndroid) await FlutterDisplayMode.setHighRefreshRate();
   runApp(const Application());
 }
 
