@@ -13,8 +13,9 @@ class NormalPaginationScreen extends StatefulWidget {
 
 class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
   final ScrollController _controller = ScrollController();
-  final List<dynamic> _items = [];
-  final bool _hasMore = true;
+  final List<dynamic> _mainList = [];
+
+  bool _hasMore = true;
 
   @override
   void initState() {
@@ -31,7 +32,7 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
 
   @override
   void dispose() {
-    _items.clear();
+    _mainList.clear();
     _controller.dispose();
     super.dispose();
   }
@@ -40,11 +41,11 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
     /// this will replace with getting data from API
     final data = Foo.generate();
 
-    /// after received data from API, append the list
-    _appendList(data);
-
     /// just for testing, remove when use with requesting API
     if (delay) await Future.delayed(const Duration(seconds: 2));
+
+    /// after received data from API, append the list
+    _appendList(data);
 
     /// this will replace with state management to tell the list widget
     /// to rebuild the UI with list items
@@ -53,16 +54,16 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
 
   void _appendList(List<Foo> append) {
     /// check remove last item to hide the loading widget
-    if (_items.isNotEmpty && _items.last is bool) {
-      _items.removeLast();
+    if (_mainList.isNotEmpty && _mainList.last is bool) {
+      _mainList.removeLast();
     }
 
     /// add all new items to the main list
-    _items.addAll(append);
+    _mainList.addAll(append);
 
     /// check if condition meet, add a boolean to show the
     /// loading widget in listview
-    if (append.isNotEmpty && _hasMore) _items.add(true);
+    if (append.isNotEmpty && _hasMore) _mainList.add(true);
   }
 
   /// normal check for listview when scroll reach bottom of the list
@@ -83,13 +84,13 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
       body: ListView.builder(
         controller: _controller,
         padding: EdgeInsets.zero,
-        itemCount: _items.length,
+        itemCount: _mainList.length,
         itemBuilder: (context, index) {
           /// check item runtimeType from main list cause it is dynamic
           /// if the item type is Foo object, build FooWidget
           /// if the item is boolean, build LoadingWidget
           /// other item type will not show anything
-          final item = _items[index];
+          final item = _mainList[index];
           switch (item.runtimeType) {
             case Foo:
               return FooWidget(foo: item as Foo);
