@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'foo.dart';
-import 'foo_widget.dart';
-import 'loading_widget.dart';
+import '../../model/foo.dart';
+import '../../widget/foo_widget.dart';
+import '../../widget/loading_widget.dart';
 
 class NormalPaginationScreen extends StatefulWidget {
   const NormalPaginationScreen({super.key});
@@ -18,7 +18,9 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
 
   @override
   void initState() {
-    _generateFooItems();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _generateFooItems(false);
+    });
     _controller.addListener(_handleScrollController);
     super.initState();
   }
@@ -30,11 +32,11 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
     super.dispose();
   }
 
-  Future<void> _generateFooItems() async {
+  Future<void> _generateFooItems([bool delay = true]) async {
     final data = Foo.generate();
     _appendList(data);
-    await Future.delayed(const Duration(seconds: 2));
-    setState(() {});
+    if (delay) await Future.delayed(const Duration(seconds: 2));
+    if (mounted) setState(() {});
   }
 
   void _appendList(List<Foo> append) {

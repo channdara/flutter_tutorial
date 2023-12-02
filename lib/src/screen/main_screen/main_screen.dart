@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../extension/contex_extension.dart';
 import '../normal_pagination_screen/normal_pagination_screen.dart';
-import 'list_tile_widget.dart';
+import '../preload_pagination_screen/preload_pagination_screen.dart';
+import 'main_screen_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            ListTileWidget(
+            MainScreenWidget(
               onTap: () {
                 context.push(const NormalPaginationScreen());
               },
@@ -28,8 +29,10 @@ class _MainScreenState extends State<MainScreen> {
               subtitle:
                   'This will show a demo of normal pagination list view which add more data when scroll reach bottom of the list',
             ),
-            ListTileWidget(
-              onTap: () {},
+            MainScreenWidget(
+              onTap: () {
+                context.push(const PreloadPaginationScreen());
+              },
               title: 'Pre-Load Pagination ListView',
               subtitle:
                   'This will show a demo of a pre-load pagination list view which add more data before the scroll reached to the bottom of the list',

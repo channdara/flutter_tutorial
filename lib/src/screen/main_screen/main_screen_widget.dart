@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ListTileWidget extends StatelessWidget {
-  const ListTileWidget({
+class MainScreenWidget extends StatelessWidget {
+  const MainScreenWidget({
     super.key,
     required this.title,
     required this.subtitle,

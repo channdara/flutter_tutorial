@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'foo.dart';
+import '../model/foo.dart';
 
 class FooWidget extends StatelessWidget {
   const FooWidget({super.key, required this.foo});
