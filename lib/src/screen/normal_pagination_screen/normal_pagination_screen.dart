@@ -18,9 +18,13 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
 
   @override
   void initState() {
+    /// addPostFrameCallback is to let the UI build complete
+    /// before requesting data from API.
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _generateFooItems(false);
     });
+
+    /// add listener to scroll controller
     _controller.addListener(_handleScrollController);
     super.initState();
   }
@@ -33,20 +37,36 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
   }
 
   Future<void> _generateFooItems([bool delay = true]) async {
+    /// this will replace with getting data from API
     final data = Foo.generate();
+
+    /// after received data from API, append the list
     _appendList(data);
+
+    /// just for testing, remove when use with requesting API
     if (delay) await Future.delayed(const Duration(seconds: 2));
+
+    /// this will replace with state management to tell the list widget
+    /// to rebuild the UI with list items
     if (mounted) setState(() {});
   }
 
   void _appendList(List<Foo> append) {
+    /// check remove last item to hide the loading widget
     if (_items.isNotEmpty && _items.last is bool) {
       _items.removeLast();
     }
+
+    /// add all new items to the main list
     _items.addAll(append);
+
+    /// check if condition meet, add a boolean to show the
+    /// loading widget in listview
     if (append.isNotEmpty && _hasMore) _items.add(true);
   }
 
+  /// normal check for listview when scroll reach bottom of the list
+  /// and _hasMore is true, request next page data from API
   void _handleScrollController() {
     final offset = _controller.offset;
     final maxScrollExtent = _controller.position.maxScrollExtent;
@@ -65,6 +85,10 @@ class _NormalPaginationScreenState extends State<NormalPaginationScreen> {
         padding: EdgeInsets.zero,
         itemCount: _items.length,
         itemBuilder: (context, index) {
+          /// check item runtimeType from main list cause it is dynamic
+          /// if the item type is Foo object, build FooWidget
+          /// if the item is boolean, build LoadingWidget
+          /// other item type will not show anything
           final item = _items[index];
           switch (item.runtimeType) {
             case Foo:
