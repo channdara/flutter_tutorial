@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../extension/contex_extension.dart';
 import '../normal_pagination_screen/normal_pagination_screen.dart';
+import '../pagination_api_screen/pagination_api_screen.dart';
+import '../pagination_widget_screen/pagination_widget_screen.dart';
 import '../preload_pagination_screen/preload_pagination_screen.dart';
 import 'main_screen_widget.dart';
 
@@ -36,6 +38,22 @@ class _MainScreenState extends State<MainScreen> {
               title: 'Pre-Load Pagination ListView',
               subtitle:
                   'This will show a demo of a pre-load pagination list view which add more data before the scroll reached to the bottom of the list',
+            ),
+            MainScreenWidget(
+              onTap: () {
+                context.push(const PaginationApiScreen());
+              },
+              title: 'Pagination with API',
+              subtitle:
+                  'Demo of the implementation of pagination with real API request',
+            ),
+            MainScreenWidget(
+              onTap: () {
+                context.push(const PaginationWidgetScreen());
+              },
+              title: 'Custom ListView',
+              subtitle:
+                  'Custom Pagination ListView Widget for more easier to copy and use across multiple projects',
             ),
           ],
         ),
