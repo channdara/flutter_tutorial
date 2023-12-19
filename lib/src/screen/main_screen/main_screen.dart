@@ -4,6 +4,7 @@ import '../../extension/contex_extension.dart';
 import '../normal_pagination_screen/normal_pagination_screen.dart';
 import '../pagination_api_screen/pagination_api_screen.dart';
 import '../pagination_widget_screen/pagination_widget_screen.dart';
+import '../pin_code_screen/pin_code_screen.dart';
 import '../preload_pagination_screen/preload_pagination_screen.dart';
 import 'main_screen_widget.dart';
 
@@ -54,6 +55,13 @@ class _MainScreenState extends State<MainScreen> {
               title: 'Custom ListView',
               subtitle:
                   'Custom Pagination ListView Widget for more easier to copy and use across multiple projects',
+            ),
+            MainScreenWidget(
+              onTap: () {
+                context.push(const PinCodeScreen());
+              },
+              title: 'Pin Code Screen',
+              subtitle: 'The demo of input pin code dialog',
             ),
           ],
         ),
