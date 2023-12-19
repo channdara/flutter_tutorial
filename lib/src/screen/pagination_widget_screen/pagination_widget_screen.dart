@@ -12,31 +12,34 @@ class PaginationWidgetScreen extends StatefulWidget {
 }
 
 class _PaginationWidgetScreenState extends State<PaginationWidgetScreen> {
-  final PaginationScrollController controller = PaginationScrollController();
-  int page = 1;
+  final PaginationScrollController _controller = PaginationScrollController();
+  int _page = 1;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _generateFooItems(false);
     });
-    controller.setupScrollListener(() {
-      _generateFooItems();
-    }, reserveSpace: 0.5);
+    _controller.setupScrollListener(
+      reserveSpace: 0.5,
+      callback: () {
+        _generateFooItems();
+      },
+    );
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
-    page = 1;
+    _controller.dispose();
+    _page = 1;
     super.dispose();
   }
 
   Future<void> _generateFooItems([bool delay = true]) async {
     final data = Foo.generate();
     if (delay) await Future.delayed(const Duration(seconds: 2));
-    controller.appendData(data, hasNext: ++page <= 5);
+    _controller.appendData(data: data, hasNext: ++_page <= 5);
     if (mounted) setState(() {});
   }
 
@@ -45,12 +48,9 @@ class _PaginationWidgetScreenState extends State<PaginationWidgetScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Pagination Widget Screen')),
       body: PaginationListView<Foo>(
-        controller: controller,
-        mainWidget: (context, item) {
+        controller: _controller,
+        mainWidget: (context, index, item) {
           return FooWidget(foo: item);
-        },
-        loadingWidget: (context) {
-          return Container(height: 32.0, width: 32.0, color: Colors.red);
         },
       ),
     );
