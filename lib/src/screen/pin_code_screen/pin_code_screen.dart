@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../isolate_timer_screen/timer_widget/timer_widget.dart';
 import 'pin_code_dialog.dart';
 
 class PinCodeScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
             const SizedBox(height: 8.0),
             Text('Status: $_status'),
             const SizedBox(height: 8.0),
+            const TimerWidget(),
           ],
         ),
       ),

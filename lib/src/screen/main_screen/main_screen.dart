@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../extension/contex_extension.dart';
+import '../isolate_timer_screen/isolate_timer_screen.dart';
+import '../isolate_timer_screen/timer_widget/timer_widget.dart';
 import '../normal_pagination_screen/normal_pagination_screen.dart';
 import '../pagination_api_screen/pagination_api_screen.dart';
 import '../pagination_widget_screen/pagination_widget_screen.dart';
 import '../pin_code_screen/pin_code_screen.dart';
 import '../preload_pagination_screen/preload_pagination_screen.dart';
+import '../story_video_screen/story_video_screen.dart';
 import 'main_screen_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,14 +19,23 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // @override
+  // void initState() {
+  //   timerBloc.startIsolate();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Tutorial')),
+      appBar: AppBar(
+        title: const Text('Flutter Tutorial'),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            const TimerWidget(),
             MainScreenWidget(
               onTap: () {
                 context.push(const NormalPaginationScreen());
@@ -62,6 +74,22 @@ class _MainScreenState extends State<MainScreen> {
               },
               title: 'Pin Code Screen',
               subtitle: 'The demo of input pin code dialog',
+            ),
+            MainScreenWidget(
+              onTap: () {
+                context.push(const IsolateTimerScreen());
+              },
+              title: 'Isolate Timer Screen',
+              subtitle:
+                  'The timer screen that use with Isolate for background process',
+            ),
+            MainScreenWidget(
+              onTap: () {
+                context.push(const StoryVideoScreen());
+              },
+              title: 'Story Video Screen',
+              subtitle:
+                  "Vertical story view like Facebook's Reel, YouTube's Short",
             ),
           ],
         ),
